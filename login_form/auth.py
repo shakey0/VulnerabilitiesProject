@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, make_response
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -9,6 +9,12 @@ from login_form.db import get_db
 from login_form.user import User
 
 bp = Blueprint('auth', __name__, url_prefix='/')
+
+@bp.route('/hello')
+def hello():
+    response = make_response('Hello, World!')
+    response.set_cookie('cookieName', 'cookieValue', secure=True, httponly=True, samesite='Strict')
+    return response
 
 @bp.route('/')
 def index():

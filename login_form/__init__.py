@@ -12,6 +12,11 @@ def create_app(test_config=None):
         SECRET_KEY=os.environ.get('SECRET_KEY', 'default_fallback_key'),
         DATABASE=os.path.join(app.instance_path, 'login_form.sqlite'),
     )
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Strict',
+    )
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -47,6 +52,7 @@ def create_app(test_config=None):
             "form-action 'self';"
             "frame-ancestors 'none';"
         )
+        resp.set_cookie('cookieName', 'cookieValue', secure=True, httponly=True, samesite='Strict')
         return resp
-
+    
     return app
