@@ -53,6 +53,7 @@ def create_app(test_config=None):
             "frame-ancestors 'none';"
         )
         resp.set_cookie('cookieName', 'cookieValue', secure=True, httponly=True, samesite='Strict')
+        resp.headers['X-Content-Type-Options'] = 'nosniff'
         return resp
     
     return app
